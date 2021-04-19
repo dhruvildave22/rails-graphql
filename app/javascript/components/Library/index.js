@@ -7,6 +7,7 @@ import cs from "./styles";
 
 const Library = () => {
   const [item, setItem] = useState(null);
+  const [errors, setErrors] = useState({});
   return (
     <Query query={LibraryQuery}>
       {({ data, loading }) => (
@@ -32,9 +33,18 @@ const Library = () => {
             <UpdateItemForm
               id={item.id}
               initialTitle={item.title}
+              errors={errors[item.id]}
               initialDescription={item.description}
               initialImageUrl={item.imageUrl}
               onClose={() => setItem(null)}
+              onErrors={itemUpdateErrors => {
+                if (itemUpdateErrors) {
+                  setItem({
+                    ...item,
+                  });
+                }
+                setErrors({ ...errors, [item.id]: itemUpdateErrors });
+              }}
             />
           )}
         </div>

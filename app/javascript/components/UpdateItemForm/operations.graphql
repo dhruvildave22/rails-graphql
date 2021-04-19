@@ -1,3 +1,4 @@
+#import '../../fragments/Item.graphql'
 mutation UpdateItemMutation(
   $id: ID!
   $title: String!
@@ -11,10 +12,11 @@ mutation UpdateItemMutation(
     imageUrl: $imageUrl
   ) {
     item {
-      id
-      title
-      description
-      imageUrl
+      ...ItemFragment
+    }
+    errors {
+      # new field
+      fullMessages
     }
   }
 }
